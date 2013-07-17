@@ -1,0 +1,14 @@
+extends layout
+block content
+  div.container
+    #inputContent
+      <p style="font-style:italic;">Enter text into this box in order for it to be Synonymized!!</p>
+      <textarea id="inText" placeholder="Enter text to be Synonimized"></textarea>
+    #buttonContent
+      input#synonymizeButton(type="image")(src="/img/synonomizeButton.png")
+    #synonymizedContent
+      <p style="font-style:italic;padding-bottom:24px;">Here is your synonymized text:</p>
+      #outputText
+        <p id="outText"></p>
+  script(src='/js/synonymize.min.js')
+  
