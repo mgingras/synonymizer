@@ -11,13 +11,15 @@ Written in node
 
 ###To-Do:
 
-- [x] Find Thesaurus API -> Use Mirriam Webster API to retrieve synonyms
-- [x] Get rid of form elements -> clickless application
-- [x] Modify current text box area so that it takes 50% of area instead of max 600, add <p></p> tag to fill on right hand side
-- [x] Use JQuery to register event listener for changes in text area
-- [x] Use JQuery to modify paragraph on right hand side so that it mirrors text in box
-- [X] Basic request for synonyms - first word entered is synonymized
-- [ ] Implement smarter synonym logic
+-[x] Find Thesaurus API 
+-[x] Set up HTML UI, with text box on left, button in middle, output on right 
+-[x] Use JQuery to register event listeners 
+-[x] Use JQuery to modify paragraph on right hand side so that it mirrors text in box 
+-[x] Basic request for synonyms 
+-[x] Pass data from web application to server and get response back 
+-[x] Modify the output field on the right with synonymized data 
+-[ ] Implement natural language recognition and replace words with valid synonymz (verb, noun, adjective) (currently just replace with whichever has data(stupid))
+
 
 * Check out: https://github.com/mikeal/request for simple requests...
 
