@@ -34,7 +34,7 @@ li {
 */
 
 header {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
   width: 100%;
   border-bottom: 1px dashed #2799E6;
   padding: 20px 0;
@@ -100,7 +100,7 @@ header h2 {
   padding: 200px 30px;
 }
 #outputText {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
   height:310px;
   color:black;
   font-size:10px;
