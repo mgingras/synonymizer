@@ -12,8 +12,8 @@ var express = require('express')
 
 var app = express();
 
-var MONGO_URI = process.env.MONGOLAB_URI
-var API_KEY = process.env.API_KEY
+var MONGO_URI = process.env.MONGOLAB_URI;
+var API_KEY = process.env.API_KEY;
 
 // all environments
 app.set('port', process.env.PORT || 8080);

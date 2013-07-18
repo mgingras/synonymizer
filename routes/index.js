@@ -29,8 +29,7 @@ exports.synonymize = function(req, res){
 exports.data = function(req, res){
   getExceptions(function(exceptions){
     if(exceptions){
-    console.log("in route: " + exceptions);
-    res.send(exceptions);
-  }
+      res.send(exceptions);
+    }
   });
 }
