@@ -18,6 +18,7 @@ Written in node
 -[x] Basic request for synonyms   
 -[x] Pass data from web application to server and get response back   
 -[x] Modify the output field on the right with synonymized data   
+-[ ] Clean up style sheet   
 -[ ] Implement natural language recognition and replace words with valid synonymz (verb, noun, adjective) (currently just replace with whichever has data(stupid))   
 
 Code pushed to heroku dev environment: [http://synonymizer.herokuapp.com/](http://synonymizer.herokuapp.com/)
