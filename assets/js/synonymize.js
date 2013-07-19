@@ -1,13 +1,6 @@
-var db;
-var words = 0;
 var exceptions = [];
-var inText = [];
 var output = [];
 var wordsModified = [];
-var noun = [];
-var verb = []
-
-
 
 $.get(
   "data",
@@ -18,11 +11,11 @@ $.get(
 )
 
 $('#inText').on('keyup', function(){
-  inText = $('#inText').val().split(" ");
-  updateText(inText);
+  updateText($('#inText').val().split(" "));
 });
 
 $('#synonymizeButton').on('click', function(){
+  output = [];
   nlp.getParse($('#inText').val(), function(data){
     console.log(data);
     for (var i = 0; i < data.words.length; i++) {
@@ -31,24 +24,14 @@ $('#synonymizeButton').on('click', function(){
         output[i] = data.words[i].value;
       }
       else{
-        console.log(data.words[i].value + "[tag]: " + data.words[i].tag);
         decryptTag(data.words[i].tag, function(grammar){
-          if(grammar != "unknown"){
-            getSynonym(data.words[i].value, grammar, i, function(modified){
-              if(modified == null){
-                console.log("Null modified???");
-              }
-              if(modified){
-                wordsModified.push(i);
-              }
-              else{
-                output[i] = data.words[i].value;
-              }
+          if(grammar == "unknown") output[i] = data.words[i].value;
+          else{
+            synonymize(data.words[i].value, grammar, i, function(word, index){
+              output[index] = word;
+              if(data.words[index].value != word) wordsModified.push(index);
               updateText(output);
             });
-          }
-          else{
-            output[i] = data.words[i].value;
           }
         });
       }
@@ -56,7 +39,7 @@ $('#synonymizeButton').on('click', function(){
   });
 });
 
-var getSynonym = function(word, grammar, index, callback){
+var synonymize = function(word, grammar, index, callback){
   console.log("Fetching synonym for " + word + " with gramar context: " + grammar);
   $.post(
     '/synonymize',
@@ -66,38 +49,37 @@ var getSynonym = function(word, grammar, index, callback){
         switch(grammar)
         {
         case "noun":
-          if(value.noun){
-            output[index] = value.noun[0]; 
-            callback(true);
-          }
-          else callback(false);
+          if(value.noun) callback(randomSyn(value.noun), index);
+          return;
           break;
         case "verb":
-          if(value.verb){
-            output[index] = value.verb[0];
-            callback(true);
-          }
-          else callback(false);
+          if(value.verb) callback(randomSyn(value.verb), index);
+          return;
           break;
         case "adjective":
-          if(value.adj){
-            output[index] = value.adj[0];
-            callback(true);
-          }
-          else callback(false);
+          if(value.adj) callback(randomSyn(value.adj), index);
+          return;
           break;
         default:
-          console.log("Not a noun, verb, or adjective. Data returned from server: " + value);
-          callback(false);
+          console.log(word + " has context, " + grammar + " not a noun, verb, or adjective.\nData returned from server: " + JSON.stringify(value));
+          callback(word, index);
+          return;
         }
       }
       else{
-        console.log("Got to the else... \nWord: " + word + '\nValues: ' + values + "\nGrammar: " + grammar);
-        // alert("Out of API calls, email: martin@magingras.com");
+        // Word not found
+        console.log(word + ' got to exception point...');
+        exceptions.push(word);
+        callback(word, index);
       }
-      callback(null);
     }
   );
+  console.log("End of synonymize... word: " + word);
+  callback(word, index);
+}
+
+function randomSyn(values) {
+  return(values[Math.floor(Math.random() * (values.length))]);
 }
 
 var isException = function(word) {
@@ -162,6 +144,7 @@ var decryptTag = function(tag, callback){
   case "JJS":
     callback("adjective"); // adjective superlatve
   default:
+    console.log("decrypt Tag failed on tag: " + tag);
     callback("unknown");
   }
 } 
