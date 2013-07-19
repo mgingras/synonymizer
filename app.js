@@ -67,14 +67,12 @@ getSynonym = function(word, callback){
     if(res.statusCode == '404' || res.statusCode == '303'){
       console.log('Handling ' + res.statusCode + ' response');
       // Words get added to MongoDB to avoid excessive API calls in future
-      addException(word, function(){
-        callback(word);
-      });
-      return;
+      addException(word);
+      callback(word);
+      return
     }
     if(res.statusCode == '500' ){
       console.log('Usage limits have been exceeded... Impressive!');
-      // Send email to me
       callback(word);
       return;
     }
@@ -84,30 +82,31 @@ getSynonym = function(word, callback){
     });
     res.on('end', function () {
       data = JSON.parse(data);
+      // console.log("For: [" + word + "]: " + JSON.stringify(data));
       values = {};
       if(data.noun){
         if(data.noun.syn){
           values.syn = true;
           values.noun = data.noun.syn;
-          console.log("nouns: "+ data.noun.syn);
+          // console.log("nouns: "+ data.noun.syn);
         }
       }
       if(data.verb){
         if(data.verb.syn){
           values.syn = true;
           values.verb = data.verb.syn;
-          console.log("verbs: "+ data.verb.syn);
+          // console.log("verbs: "+ data.verb.syn);
         }
       }
       if(data.adjective){
         if(data.adjective.syn){
           values.syn = true;
           values.adj = data.adjective.syn;
-          console.log("adjective: "+ data.adjective.syn);
+          // console.log("adjective: "+ data.adjective.syn);
         }
       }
       if(!values.syn) {
-        console.log("No Synonyms!");
+        console.log("No Synonyms found for: " + word + " (should have gotten a 303 or 404)");
         callback(word); //an error occurred, should be 404 page...
         return;
       }
@@ -133,7 +132,7 @@ getExceptions = function(callback){
   });
 }
 
-var addException = function(word, callback) {
+var addException = function(word) {
   console.log("adding exception for: " + word);
   mongo.connect(MONGO_URI, function(err, db){
     db.collection('data').findAndModify(
