@@ -19,7 +19,10 @@ Written in node
 -[x] Pass data from web application to server and get response back   
 -[x] Modify the output field on the right with synonymized data   
 -[ ] Clean up style sheet   
--[ ] Implement natural language recognition and replace words with valid synonymz (verb, noun, adjective) (currently just replace with whichever has data(stupid))   
+-[ ] Better picking response words
+-[ ] Implement natural language recognition and replace words with valid synonym (verb, noun, adjective) (currently just replace with whichever has data(stupid))
+
+Found JS natural language API: [Stanford Natural Language Parser](http://nlp.naturalparsing.com/documentation)
 
 Code pushed to heroku dev environment: [http://synonymizer.herokuapp.com/](http://synonymizer.herokuapp.com/)
 
