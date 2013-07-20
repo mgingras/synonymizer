@@ -18,11 +18,14 @@ Written in node
 -[x] Basic request for synonyms   
 -[x] Pass data from web application to server and get response back   
 -[x] Modify the output field on the right with synonymized data   
--[ ] Clean up style sheet   
--[ ] Better picking response words
--[ ] Implement natural language recognition and replace words with valid synonym (verb, noun, adjective) (currently just replace with whichever has data(stupid))
+-[X] Better(ish) picking response words (now randomly choses amongst responses that match gramatical context)   
+-[X] Implement natural language recognition and replace words with valid synonym (verb, noun, adjective) (currently just replace with whichever has data(stupid))   
+Clean up stylesheet
+-[ ] Get rid of unused styles
+-[ ] Add media conditions in order to optimize for mobile
+cd
 
-Found JS natural language API: [Stanford Natural Language Parser](http://nlp.naturalparsing.com/documentation)
+Props to Andrew LeBlanc for his JS natural language API: [Stanford Natural Language Parser](http://nlp.naturalparsing.com/documentation)
 
 Code pushed to heroku dev environment: [http://synonymizer.herokuapp.com/](http://synonymizer.herokuapp.com/)
 
