@@ -20,10 +20,13 @@ Written in node
 -[x] Modify the output field on the right with synonymized data   
 -[X] Better(ish) picking response words (now randomly choses amongst responses that match gramatical context)   
 -[X] Implement natural language recognition and replace words with valid synonym (verb, noun, adjective) (currently just replace with whichever has data(stupid))   
-Clean up stylesheet
--[ ] Get rid of unused styles
--[ ] Add media conditions in order to optimize for mobile
-cd
+-[ ] On client side when sending queries cast to lowercase   
+-[ ] When getting back upercase if after a punctuation point   
+-[ ] Get rid of unused css styles   
+-[ ] Add media conditions in order to optimize for mobile (looks bad on iphone and ipad atm, probably looks bad on other devices as well)   
+
+
+
 
 Props to Andrew LeBlanc for his JS natural language API: [Stanford Natural Language Parser](http://nlp.naturalparsing.com/documentation)
 
