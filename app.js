@@ -55,9 +55,28 @@ app.configure('production', function(){
 // Getting synonyms
 getSynonym = function(word, grammar, callback){
   console.log("Word Queried: " + word);
+  // Track whether we singularize the word
+  var singularized = false;
+  var qWord;
+  switch(grammar){
+    case "noun":
+    if(!(word === nounTense.singularize(word))){
+      qWord = nounTense.singularize(word);
+      singularized = true;
+    }
+    break;
+    case "verb":
+    if(!(word === verbTense.singularize(word))){
+      qWord = verbTense.singularize(word);
+      singularized = true;
+    }
+    default:
+    qWord = word;
+    break;
+  }
   var options = {
     host: 'words.bighugelabs.com',
-    path: '/api/2/' + API_KEY + '/' + word + '/json'
+    path: '/api/2/' + API_KEY + '/' + qWord + '/json'
   };
   
   console.log("API request to URL: " + options.host + options.path);
@@ -70,7 +89,7 @@ getSynonym = function(word, grammar, callback){
     if(res.statusCode == '404' || res.statusCode == '303'){
       console.log('Handling ' + res.statusCode + ' response');
       // Words get added to MongoDB to avoid excessive API calls in future
-      addException(word);
+      addException(qWord);
       callback(word);
       return
     }
@@ -86,44 +105,44 @@ getSynonym = function(word, grammar, callback){
     res.on('end', function () {
       data = JSON.parse(data);
       // console.log("For: [" + word + "]: " + JSON.stringify(data));
-      values = {};
       switch (grammar)
       {
-      case "noun":
+        case "noun":
         if(data.noun){
           if(data.noun.syn){
-            values.syn = data.noun.syn;
-          }
-        }
-        break;
-      case "verb":
-        if(data.verb){
-          if(data.verb.syn){
-            values.syn = data.verb.syn;
-          }
-        }
-        break;
-      case "adjective":
-        if(data.adjective){
-          if(data.adjective.syn){
-            values.syn = data.adjective.syn;
+            word = randomSyn(data.noun.syn);
+            if(singularized){
+              word = nounTense.pluralize(word);
             }
           }
-          break;
+        }
+        break;
+        case "verb":
+        if(data.verb){
+          if(data.verb.syn){
+            word = randomSyn(data.verb.syn);
+            if(singularized){
+              word = verbTense.pluralize(word);
+            }
+          }
+        }
+        break;
+        case "adjective":
+        if(data.adjective){
+          if(data.adjective.syn){
+            word = randomSyn(data.adjective.syn);
+          }
+        }
+        break;
         default:
-          console.log("No synonyms for " + word + " with context, " + grammar + " Data returned from server: " +  values);
+        console.log("No synonyms for " + word + " with context, " + grammar + " Data returned from server: " +  data);
       }
-      if(values.syn){
-        callback(randomSyn(values.syn));
-      }
-      else{
-        callback(word);
-      }
+      callback(word);
     });
-}).on('error', function(e) {
-  console.log('ERROR: ' + e.message);
-  console.log(e.stack);
-});
+  }).on('error', function(e) {
+    console.log('ERROR: ' + e.message);
+    console.log(e.stack);
+  });
 }
 
 // Helper function
