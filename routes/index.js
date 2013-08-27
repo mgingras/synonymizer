@@ -11,10 +11,10 @@ exports.index = function(req, res){
  */
 exports.synonymize = function(req, res){
   /* Make the API call to get the synonym */
-  getSynonym(req.body.value, function(val) {
+  getSynonym(req.body.value, req.body.context, function(val) {
     if(val) {
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(val));
+      res.end(val);
     }
     else {
       res.end();

@@ -43,32 +43,14 @@ var synonymize = function(word, grammar, index, callback){
   console.log("Fetching synonym for " + word + " with gramar context: " + grammar);
   $.post(
     '/synonymize',
-    data = {value: word},
+    data = {value: word, context: grammar},
     success = function(value, status, jqXHR) {
-      if(value.syn) {
-        switch(grammar)
-        {
-        case "noun":
-          if(value.noun) callback(randomSyn(value.noun), index);
-          return;
-          break;
-        case "verb":
-          if(value.verb) callback(randomSyn(value.verb), index);
-          return;
-          break;
-        case "adjective":
-          if(value.adj) callback(randomSyn(value.adj), index);
-          return;
-          break;
-        default:
-          console.log(word + " has context, " + grammar + " not a noun, verb, or adjective.\nData returned from server: " + JSON.stringify(value));
-          callback(word, index);
-          return;
-        }
+      if(value){
+        console.log("Server returned: " + value);
+        callback(value, index);
       }
       else{
-        // Word not found
-        console.log(word + ' got to exception point...');
+        console.log("Server did not return anything, " + word + " added to exception list");
         exceptions.push(word);
         callback(word, index);
       }

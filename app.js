@@ -1,4 +1,3 @@
-
 /**
 * Module dependencies.
 */
@@ -8,12 +7,16 @@ var express = require('express')
 , compressor = require('node-minify')
 , path = require('path')
 , http = require('http')
-, mongo = require('mongodb');
+, mongo = require('mongodb')
+, natural = require('natural');
 
 var app = express();
 
 var MONGO_URI = process.env.MONGOLAB_URI;
 var API_KEY = process.env.API_KEY;
+
+var verbTense = new natural.PresentVerbInflector();
+var nounTense = new natural.NounInflector();
 
 // all environments
 app.set('port', process.env.PORT || 8080);
@@ -50,7 +53,7 @@ app.configure('production', function(){
 
 
 // Getting synonyms
-getSynonym = function(word, callback){
+getSynonym = function(word, grammar, callback){
   console.log("Word Queried: " + word);
   var options = {
     host: 'words.bighugelabs.com',
@@ -84,39 +87,50 @@ getSynonym = function(word, callback){
       data = JSON.parse(data);
       // console.log("For: [" + word + "]: " + JSON.stringify(data));
       values = {};
-      if(data.noun){
-        if(data.noun.syn){
-          values.syn = true;
-          values.noun = data.noun.syn;
-          // console.log("nouns: "+ data.noun.syn);
+      switch (grammar)
+      {
+      case "noun":
+        if(data.noun){
+          if(data.noun.syn){
+            values.syn = data.noun.syn;
+          }
         }
-      }
-      if(data.verb){
-        if(data.verb.syn){
-          values.syn = true;
-          values.verb = data.verb.syn;
-          // console.log("verbs: "+ data.verb.syn);
+        break;
+      case "verb":
+        if(data.verb){
+          if(data.verb.syn){
+            values.syn = data.verb.syn;
+          }
         }
+        break;
+      case "adjective":
+        if(data.adjective){
+          if(data.adjective.syn){
+            values.syn = data.adjective.syn;
+            }
+          }
+          break;
+        default:
+          console.log("No synonyms for " + word + " with context, " + grammar + " Data returned from server: " +  values);
       }
-      if(data.adjective){
-        if(data.adjective.syn){
-          values.syn = true;
-          values.adj = data.adjective.syn;
-          // console.log("adjective: "+ data.adjective.syn);
-        }
+      if(values.syn){
+        callback(randomSyn(values.syn));
       }
-      if(!values.syn) {
-        console.log("No Synonyms found for: " + word + " (should have gotten a 303 or 404)");
-        callback(word); //an error occurred, should be 404 page...
-        return;
+      else{
+        callback(word);
       }
-      callback(values);
     });
-  }).on('error', function(e) {
-    console.log('ERROR: ' + e.message);
-    console.log(e.stack);
-  });
+}).on('error', function(e) {
+  console.log('ERROR: ' + e.message);
+  console.log(e.stack);
+});
 }
+
+// Helper function
+function randomSyn(synonyms) {
+  return(synonyms[Math.floor(Math.random() * (synonyms.length))]);
+}
+
 
 var exceptions = [];
 
@@ -132,6 +146,7 @@ getExceptions = function(callback){
   });
 }
 
+//Add exception to mongoDB
 var addException = function(word) {
   console.log("adding exception for: " + word);
   mongo.connect(MONGO_URI, function(err, db){
@@ -145,7 +160,7 @@ var addException = function(word) {
         else console.dir(object);
         db.close();
       }
-    );
+      );
   });
 }
 
