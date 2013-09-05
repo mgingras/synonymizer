@@ -54,26 +54,32 @@ app.configure('production', function(){
 
 // Getting synonyms
 getSynonym = function(word, grammar, callback){
-  console.log("Word Queried: " + word);
+  console.log("Word Queried: " + word + " with grammar: " + grammar);
+  
   // Track whether we singularize the word
   var singularized = false;
   var qWord;
   switch(grammar){
-    case "noun":
+  case "noun":
     if(!(word === nounTense.singularize(word))){
       qWord = nounTense.singularize(word);
       singularized = true;
     }
     break;
-    case "verb":
+  case "verb":
+    con
     if(!(word === verbTense.singularize(word))){
       qWord = verbTense.singularize(word);
       singularized = true;
     }
-    default:
+  default:
     qWord = word;
     break;
   }
+  
+  console.log("qWord: " + qWord);
+  console.log("word: " + word);
+  
   var options = {
     host: 'words.bighugelabs.com',
     path: '/api/2/' + API_KEY + '/' + qWord + '/json'
@@ -107,7 +113,7 @@ getSynonym = function(word, grammar, callback){
       // console.log("For: [" + word + "]: " + JSON.stringify(data));
       switch (grammar)
       {
-        case "noun":
+      case "noun":
         if(data.noun){
           if(data.noun.syn){
             word = randomSyn(data.noun.syn);
@@ -117,7 +123,7 @@ getSynonym = function(word, grammar, callback){
           }
         }
         break;
-        case "verb":
+      case "verb":
         if(data.verb){
           if(data.verb.syn){
             word = randomSyn(data.verb.syn);
@@ -127,14 +133,14 @@ getSynonym = function(word, grammar, callback){
           }
         }
         break;
-        case "adjective":
+      case "adjective":
         if(data.adjective){
           if(data.adjective.syn){
             word = randomSyn(data.adjective.syn);
           }
         }
         break;
-        default:
+      default:
         console.log("No synonyms for " + word + " with context, " + grammar + " Data returned from server: " +  data);
       }
       callback(word);
@@ -179,7 +185,7 @@ var addException = function(word) {
         else console.dir(object);
         db.close();
       }
-      );
+    );
   });
 }
 
