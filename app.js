@@ -61,7 +61,9 @@ getSynonym = function(word, grammar, callback){
   var qWord;
   switch(grammar){
   case "noun":
-    if(!(word === nounTense.singularize(word))){
+    var temp = nounTense.singularize(word);
+    console.log("singular word is: " + temp);
+    if(!(word === temp)){
       qWord = nounTense.singularize(word);
       singularized = true;
     }
