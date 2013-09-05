@@ -59,23 +59,21 @@ getSynonym = function(word, grammar, callback){
   // Track whether we singularize the word
   var singularized = false;
   var qWord;
-  switch(grammar){
+  switch(grammar)
+  {
   case "noun":
-    var temp = nounTense.singularize(word);
-    console.log("singular word is: " + temp);
-    if(!(word === temp)){
-      console.log(word + " !=== " + temp);
-      qWord = nounTense.singularize(word);
-      console.log("qWooord: " + qWord);
+    qWord = nounTense.singularize(word);
+    if(!(null == qWord)){
       singularized = true;
     }
+    else qWord = word;
     break;
   case "verb":
-    con
-    if(!(word === verbTense.singularize(word))){
-      qWord = verbTense.singularize(word);
+    qWord = verbTense.singularize(word);
+    if(!(null === qWord)){
       singularized = true;
     }
+    else qWord = word;
   default:
     qWord = word;
     break;
