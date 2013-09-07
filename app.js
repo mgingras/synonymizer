@@ -40,6 +40,15 @@ new compressor.minify({
   }
 });
 
+new compressor.minify({
+  type: 'uglifyjs',
+  fileIn: 'assets/js/anal.js',
+  fileOut: 'public/js/anal.min.js',
+  callback: function(err){
+    if(err) console.log("minify: " + err);
+  }
+});
+
 // development only configuration
 app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
