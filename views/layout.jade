@@ -13,6 +13,7 @@ html(lang="en")
     link(rel="apple-touch-icon", href="/img/appleSynonymize.jpg")
     link(rel="apple-touch-icon-precomposed", href="/img/appleSynonymize.jpg")
     
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
     // standard viewport tag to set the viewport to the device's width
     // , Android 2.3 devices need this so 100% width works properly and
     // doesn't allow children to blow up the viewport width
@@ -34,8 +35,8 @@ html(lang="en")
     
     script(src='/js/jquery-2.0.3.min.js')
     script(src='/js/nlp-api-0.1.js')
-  body
     script(src='/js/anal.min.js')
+  body
     header
       .container
         h1#title=title
