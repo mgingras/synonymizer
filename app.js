@@ -2,14 +2,6 @@
 * Module dependencies.
 */
 
-// To keep-alive on heroku
-if(process.env.NODETIME_ACCOUNT_KEY) {
-  require('nodetime').profile({
-    accountKey: process.env.NODETIME_ACCOUNT_KEY,
-    appName: 'Synonymizer'
-  });
-}
-
 
 var express = require('express')
 , routes = require('./routes')
