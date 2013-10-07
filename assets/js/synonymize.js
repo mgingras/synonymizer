@@ -41,10 +41,11 @@ $('#synonymizeButton').on('click', function(){
 
 var synonymize = function(word, grammar, index, callback){
   console.log("Fetching synonym for " + word + " with gramar context: " + grammar);
-  $.post(
-    '/synonymize',
+  $.post('/synonymize',
     data = {value: word, context: grammar},
-    success = function(value, status, jqXHR) {
+    function(value) {
+      word = value;
+      console.log("in success: " + value + " " + status);
       if(value){
         console.log("Server returned: " + value);
         callback(value, index);
@@ -56,8 +57,6 @@ var synonymize = function(word, grammar, index, callback){
       }
     }
   );
-  console.log("End of synonymize... word: " + word);
-  callback(word, index);
 }
 
 function randomSyn(values) {
