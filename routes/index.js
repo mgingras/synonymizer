@@ -11,14 +11,9 @@ exports.index = function(req, res){
  */
 exports.synonymize = function(req, res){
   /* Make the API call to get the synonym */
-  getSynonym(req.body.value, req.body.context, function(val) {
-    if(val) {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(val);
-    }
-    else {
-      res.end();
-    }
+  var word = getSynonym(req.body.value, req.body.context, function(word){
+    console.log("after get syn " + word);
+    res.send(word);
   });
 };
 
