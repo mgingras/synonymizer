@@ -8,16 +8,12 @@ var express = require('express')
 , compressor = require('node-minify')
 , path = require('path')
 , http = require('http')
-, mongo = require('mongodb')
-, natural = require('natural');
+, mongo = require('mongodb');
 
 var app = express();
 
 var MONGO_URI = process.env.MONGOLAB_URI;
 var API_KEY = process.env.API_KEY;
-
-var verbTense = new natural.PresentVerbInflector();
-var nounTense = new natural.NounInflector();
 
 // all environments
 app.set('port', process.env.PORT || 8080);
@@ -66,35 +62,9 @@ app.configure('production', function(){
 getSynonym = function(word, grammar, callback){
   console.log("Word Queried: " + word + " with grammar: " + grammar);
   
-  // Track whether we singularize the word
-  var singularized = false;
-  var qWord;
-  switch(grammar)
-  {
-  case "noun":
-    qWord = nounTense.singularize(word);
-    if(!(null == qWord)){
-      singularized = true;
-    }
-    else qWord = word;
-    break;
-  case "verb":
-    qWord = verbTense.singularize(word);
-    if(!(null === qWord)){
-      singularized = true;
-    }
-    else qWord = word;
-  default:
-    qWord = word;
-    break;
-  }
-  
-  console.log("qWord: " + qWord);
-  console.log("word: " + word);
-  
   var options = {
     host: 'words.bighugelabs.com',
-    path: '/api/2/' + API_KEY + '/' + qWord + '/json'
+    path: '/api/2/' + API_KEY + '/' + word + '/json'
   };
   
   console.log("API request to URL: " + options.host + options.path);
@@ -107,9 +77,9 @@ getSynonym = function(word, grammar, callback){
     if(res.statusCode == '404' || res.statusCode == '303'){
       console.log('Handling ' + res.statusCode + ' response');
       // Words get added to MongoDB to avoid excessive API calls in future
-      addException(qWord);
+      addException(word);
       callback(word);
-      return
+      return;
     }
     if(res.statusCode == '500' ){
       console.log('Usage limits have been exceeded... Impressive!');
@@ -122,48 +92,39 @@ getSynonym = function(word, grammar, callback){
     });
     res.on('end', function () {
       data = JSON.parse(data);
-      // console.log("For: [" + word + "]: " + JSON.stringify(data));
+      console.log("For: [" + word + "]: " + JSON.stringify(data));
       switch (grammar)
       {
       case "noun":
-        if(data.noun){
-          if(data.noun.syn){
-            word = randomSyn(data.noun.syn);
-            if(singularized){
-              word = nounTense.pluralize(word);
-            }
-          }
+
+        if(data.noun.syn){
+          word = randomSyn(data.noun.syn);
         }
         break;
       case "verb":
-        if(data.verb){
-          if(data.verb.syn){
-            word = randomSyn(data.verb.syn);
-            if(singularized){
-              word = verbTense.pluralize(word);
-            }
-          }
+        if(data.verb.syn){
+          word = randomSyn(data.verb.syn);
         }
         break;
       case "adjective":
-        if(data.adjective){
-          if(data.adjective.syn){
-            word = randomSyn(data.adjective.syn);
-          }
+        if(data.adjective.syn){
+          word = randomSyn(data.adjective.syn);
         }
         break;
       default:
         console.log("No synonyms for " + word + " with context, " + grammar + " Data returned from server: " +  data);
       }
+      console.log(word);
       callback(word);
+      return;
     });
   }).on('error', function(e) {
     console.log('ERROR: ' + e.message);
     console.log(e.stack);
   });
-}
+};
 
-// Helper function
+// Helper function to choose random synonym
 function randomSyn(synonyms) {
   return(synonyms[Math.floor(Math.random() * (synonyms.length))]);
 }
