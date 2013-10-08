@@ -66,24 +66,23 @@ getSynonym = function(word, grammar, callback){
     host: 'words.bighugelabs.com',
     path: '/api/2/' + API_KEY + '/' + word + '/json'
   };
-  
   console.log("API request to URL: " + options.host + options.path);
-  
-  http.get(options, function(res) {
+    http.get(options, function(res) {
     var data = '';
     console.log('API response statusCode: ' + res.statusCode);
     
     // Word not found or alternative suggestion (neither which we want)
-    if(res.statusCode == '404' || res.statusCode == '303'){
+    if(res.statusCode == '404' || res.statusCode == '303' || res.statusCode == '500'){
       console.log('Handling ' + res.statusCode + ' response');
-      // Words get added to MongoDB to avoid excessive API calls in future
-      addException(word); //, function(word){
-        console.log("Exception Added");
-        callback(word);
-        return;
-    }
-    if(res.statusCode == '500' ){
-      console.log('Usage limits have been exceeded... Impressive!');
+      if(res.statusCode == '500' ){
+        console.log('Usage limits have been exceeded... Impressive!');
+      }
+      else{
+        // Words get added to MongoDB to avoid excessive API calls in future
+        addException(word);
+      }
+      // HTTP keeps conneciton open unless data is consumed...
+      res.on('data', function() {});  // consume data!
       callback(word);
       return;
     }
@@ -151,7 +150,7 @@ getExceptions = function(callback){
 
 //Add exception to mongoDB
 var addException = function(word) {
-  console.log("adding exception for: " + word);
+  console.log("adding exception for: " + word);  
   mongo.connect(MONGO_URI, function(err, db){
     db.collection('data').findAndModify(
       ({ "_id" : 1}), // query
