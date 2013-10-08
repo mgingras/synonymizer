@@ -5,7 +5,7 @@ var wordsModified = [];
 $.get(
   "data",
   function(data){
-    console.log(data);
+    // console.log(data);
     exceptions = data;
   }
 )
@@ -17,10 +17,10 @@ $('#inText').on('keyup', function(){
 $('#synonymizeButton').on('click', function(){
   output = [];
   nlp.getParse($('#inText').val(), function(data){
-    console.log(data);
+    // console.log(data);
     for (var i = 0; i < data.words.length; i++) {
       if(isException(data.words[i].value.toLowerCase())){
-        console.log(data.words[i].value + " is an exception");
+        // console.log(data.words[i].value + " is an exception");
         output[i] = data.words[i].value;
       }
       else{
@@ -40,20 +40,18 @@ $('#synonymizeButton').on('click', function(){
 });
 
 var synonymize = function(word, grammar, index, callback){
-  console.log("Fetching synonym for " + word + " with gramar context: " + grammar);
+  // console.log("Fetching synonym for " + word + " with gramar context: " + grammar);
   $.post('/synonymize',
     data = {value: word, context: grammar},
     function(value) {
-      word = value;
-      console.log("in success: " + value + " " + status);
-      if(value){
-        console.log("Server returned: " + value);
+      if(value != word){
+        console.log("Server returned " + value + " as a synonym for " + word);
         callback(value, index);
       }
       else{
-        console.log("Server did not return anything, " + word + " added to exception list");
-        exceptions.push(word);
-        callback(word, index);
+        console.log("Server did not return a synonym, queried:" + word + " and returned " + value);
+        exceptions.push(value);
+        callback(value, index);
       }
     }
   );

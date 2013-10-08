@@ -60,7 +60,7 @@ app.configure('production', function(){
 
 // Getting synonyms
 getSynonym = function(word, grammar, callback){
-  console.log("Word Queried: " + word + " with grammar: " + grammar);
+  console.log("Word Queried: " + word + ", With Grammar: " + grammar);
   
   var options = {
     host: 'words.bighugelabs.com',
@@ -92,7 +92,7 @@ getSynonym = function(word, grammar, callback){
     });
     res.on('end', function () {
       data = JSON.parse(data);
-      console.log("For: [" + word + "]: " + JSON.stringify(data));
+      // console.log("For: [" + word + "]: " + JSON.stringify(data));
       switch (grammar)
       {
       case "noun":
@@ -112,9 +112,9 @@ getSynonym = function(word, grammar, callback){
         }
         break;
       default:
-        console.log("No synonyms for " + word + " with context, " + grammar + " Data returned from server: " +  data);
+        console.log("No synonyms for " + word + " with context, " + grammar + " Data returned from server: " +  JSON.stringify(data));
       }
-      console.log(word);
+      console.log("Returning: " + word);
       callback(word);
       return;
     });
@@ -136,7 +136,7 @@ var exceptions = [];
 getExceptions = function(callback){
   mongo.connect(MONGO_URI, function(err, db){
     db.collection('data').find({ "_id" : 1}).toArray(function(err, results){
-      console.log("Exceptions from MongoDB: " + results[0].exceptions);
+      // console.log("Exceptions from MongoDB: " + results[0].exceptions);
       exceptions = results[0].exceptions;
       callback(exceptions);
       db.close();
