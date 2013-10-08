@@ -77,9 +77,10 @@ getSynonym = function(word, grammar, callback){
     if(res.statusCode == '404' || res.statusCode == '303'){
       console.log('Handling ' + res.statusCode + ' response');
       // Words get added to MongoDB to avoid excessive API calls in future
-      addException(word);
-      callback(word);
-      return;
+      addException(word); //, function(word){
+        console.log("Exception Added");
+        callback(word);
+        return;
     }
     if(res.statusCode == '500' ){
       console.log('Usage limits have been exceeded... Impressive!');
@@ -96,19 +97,24 @@ getSynonym = function(word, grammar, callback){
       switch (grammar)
       {
       case "noun":
-
-        if(data.noun.syn){
-          word = randomSyn(data.noun.syn);
+        if(data.noun){
+          if(data.noun.syn){
+            word = randomSyn(data.noun.syn);
+          }
         }
         break;
       case "verb":
-        if(data.verb.syn){
-          word = randomSyn(data.verb.syn);
+        if(data.verb){
+          if(data.verb.syn){
+            word = randomSyn(data.verb.syn);
+          }
         }
         break;
       case "adjective":
-        if(data.adjective.syn){
-          word = randomSyn(data.adjective.syn);
+        if(data.adjective){
+          if(data.adjective.syn){
+            word = randomSyn(data.adjective.syn);
+          }
         }
         break;
       default:
@@ -116,7 +122,6 @@ getSynonym = function(word, grammar, callback){
       }
       console.log("Returning: " + word);
       callback(word);
-      return;
     });
   }).on('error', function(e) {
     console.log('ERROR: ' + e.message);
@@ -155,7 +160,7 @@ var addException = function(word) {
       {},
       function(err, object) {
         if (err) console.warn(err.message);
-        else console.dir(object);
+        // else console.dir(object);
         db.close();
       }
     );
