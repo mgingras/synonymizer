@@ -1,14 +1,19 @@
 extends layout
 block content
-  div.container
-    #inputContent
-      p(style="font-style:italic;") Enter text into this box for it to be Synonymized!!
-      textarea#inText(placeholder="Enter text here to be Synonymized")
-    #buttonContent
-      input#synonymizeButton(type="image", src="img/synonymize.png")
-    #synonymizedContent
-      p#outP(style="font-style:italic;") Here is your synonymized text:
-      #outputText
-        <p id="outText"></p>
+  .jumbotron
+    .container
+      h1#title=title
+      a(href="http://mgingras.ca")
+        button."btn btn-default" mgingras.ca
+      a(href="http://github.com/mgingras/synonymizer") 
+        button."btn btn-default" View on GitHub
+  .container
+    .row
+      #inputContent.col-lg-6
+        p(style="font-style:italic;") Enter text into this box for it to be Synonymized!!
+        textarea#inText(placeholder="Enter text here to be Synonymized")
+      .col-lg-6
+        p#outP(style="font-style:italic;") Here is your synonymized text:
+        #outputText
+          p#outText
   script(src='/js/synonymize.min.js')
-  

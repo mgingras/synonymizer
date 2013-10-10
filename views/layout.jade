@@ -23,8 +23,11 @@ html(lang="en")
     meta(name="viewport", id="vp6", content="initial-scale=1.0,user-scalable=no,maximum-scale=1",  media="(device-height: 568px)")
     
     title=title
-    link(rel='stylesheet', href='css/style.css')
-    link(rel='stylesheet', href='css/add2home.css')
+    
+    link(rel='stylesheet', href='/css/style.css')
+    link(rel='stylesheet', href='/css/add2home.css')
+    link(rel='stylesheet', href='/css/bootstrap-theme.min.css')    
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
     
     // For IE
     link(rel='shortcut icon', href='img/favicon.ico')
@@ -35,16 +38,8 @@ html(lang="en")
     meta(property="og:image", content="/img/appleSynonymize.png")
     
     script(src='/js/jquery-2.0.3.min.js')
+    script(src='/js/bootstrap.min.js')
     script(src='/js/nlp-api-0.1.js')
     script(src='/js/anal.min.js')
     script(src='/js/add2home.js')
-  body
-    header
-      .container
-        h1#title=title
-        section#downloads
-          h5= "Written by: Martin Gingras"
-          a.btn(href="http://mgingras.ca") mgingras.ca
-          a.btn(href="https://github.com/mgingras/synonymizer") View on GitHub
-    block content
-    
+  body    
