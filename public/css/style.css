@@ -10,14 +10,9 @@ body {
 /* General & 'Reset' Stuff */
 
 .container {
-  height:100%;
-  padding: 20px;
-  padding: 0px 20px;
 }
 
 section {
-  display: block;
-  margin: 0 0 20px 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -31,15 +26,6 @@ h1, h2, h3, h4, h5, h6 {
 * h1       - project name
 * h2       - project description
 */
-
-header {
-  background: rgba(0, 0, 0, 0.2);
-  width: 100%;
-  border-bottom: 1px dashed #2799E6;
-  padding-left: 20px;
-  padding: 20px 0;
-  margin: 0 0 40px 0;
-}
 
 header h1 {
   font-size: 30px;
@@ -55,52 +41,32 @@ header h1 {
   -webkit-font-smoothing: antialiased;
 }
 
-header h1:before {
-  content: "./ ";
-  font-size: 24px;
-}
-
-#downloads .btn {
-  display: inline-block;
-  text-align: center;
-  margin: 0;
-}
-
 /*  Main Content
 */
 
 #inputContent {
-  width: 40%;
   height: 100%;
-  float: left;
+}
+#outputText {
+  padding-top:1px;
+  height:400px;
 }
 #synonymizedContent {
-  width: 40%;
-  height: 100%;
-  float: left;
+  padding-top:-5px;
 }
 #buttonContent {
-  float: left;
-  width: 10%;
   text-align: center;
-  border: none;
-  padding: 200px 30px;
+  padding-top: 120px;
 }
 #outputText {
   background: rgba(0, 0, 0, 0.2);
-  height:310px;
+  height:350px;
   color:black;
-  font-size:10px;
-  padding: 0px 5px;
-  width:100%;
-  float:left;
 }
 #outText {
   padding: 0px 5px;
 }
 #synonymizeButton {
-  width: 100px;
-  height: 100px;
   background-color:white;
   -moz-border-radius:15px;
   border-radius:15px;
@@ -111,14 +77,9 @@ header h1:before {
   border-color: #eaeaea;
 }
 #inText {
-  height:300px;
+  height:350px;
   width:100%;
-}
-#title{
-  text-shadow:0 -1px 0 rgba(0, 0, 0, 0.50);
-}
-#outP {
-  padding-bottom:24px;
+  resize:none;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -131,50 +92,13 @@ h1, h2, h3, h4, h5, h6 {
   0 0 10px rgba(181, 232, 83, 0.1);
 }
 
-/*  Buttons
-*/
-
-.btn {
-  display: inline-block;
-  background: -webkit-linear-gradient(top, rgba(40, 40, 40, 0.3), rgba(35, 35, 35, 0.3) 50%, rgba(10, 10, 10, 0.3) 50%, rgba(0, 0, 0, 0.3));
-  padding: 8px 18px;
-  border-radius: 50px;
-  border: 2px solid rgba(0, 0, 0, 0.7);
-  border-bottom: 2px solid rgba(0, 0, 0, 0.7);
-  border-top: 2px solid rgba(0, 0, 0, 1);
-  font-family: Helvetica, Arial, sans-serif;
-  font-weight: bold;
-  font-size: 13px;
-  text-decoration: none;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.50);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-.btn:hover {
-  background: -webkit-linear-gradient(top, rgba(40, 40, 40, 0.6), rgba(35, 35, 35, 0.6) 50%, rgba(10, 10, 10, 0.8) 50%, rgba(0, 0, 0, 0.8));
-}
-
-
-/* Links
-*  a, a:hover, a:visited
-*/
-
-a {
-  color: #63c0f5;
-  text-shadow: 0 0 5px rgba(104, 182, 255, 0.5);
-}
-
-/*
-*  Media changes
-*/
-
 /*
 *  Tablet
 */
 
 @media screen and (max-width:890px){
   #buttonContent{
-    padding: 200px 10px;
+    padding-top: 100px;
   }
   #synonymizeButton {
     height:50px;
@@ -198,36 +122,34 @@ a {
   p {
     font-size:12px;
   }
-  #outP {
-    padding-bottom: 19px;
+}
+@media screen and (max-width:768px){
+  #buttonContent{
+    padding-top: 10px;
   }
 }
-/* Text folds at this width, this keeps box at good height*/
-@media screen and (max-width:579px){
-  #outP {
-    padding-bottom: 0px;
-  }
-}
+
 /*
 *  Mobile
 */
+
 @media screen and (max-width:500px){
+  #buttonContent{
+    padding-top: 10px;
+  }
   .container {
     padding: 0px 5px 5px 5px;
   }
   #inputContent {
-    width: 100%;
     height: 160px;
-    float: left;
   }
   #inText {
     height:110px;
     width:100%;
+    resize: none; 
   }
   #synonymizedContent {
-    width: 100%;
     height: 150px;
-    float: left;
   }
   #buttonContent {
     float: left;
@@ -236,10 +158,6 @@ a {
     text-align: center;
     border: none;
     padding: 0px;
-  }
-  #outputText {
-    height:110px;
-    width:97%;
   }
   #title {
     font-size:15px;

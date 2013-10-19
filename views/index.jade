@@ -1,19 +1,27 @@
 extends layout
 block content
+
   .jumbotron
     .container
       h1#title=title
+      h5 Written by: Martin Gingras
       a(href="http://mgingras.ca")
-        button."btn btn-default" mgingras.ca
+        button.btn.btn-default mgingras.ca
       a(href="http://github.com/mgingras/synonymizer") 
-        button."btn btn-default" View on GitHub
+        button.btn.btn-default View on GitHub
   .container
     .row
-      #inputContent.col-lg-6
+      #syn.col-lg-5.col-md-5.col-sm-5
         p(style="font-style:italic;") Enter text into this box for it to be Synonymized!!
+      #syn-text.col-lg-5.col-lg-offset-2.col-md-5.col-md-offset-2.col-sm-5.col-sm-offset-2.hidden-xs
+        p(style="font-style:italic;") Here is your Synonymized text:
+    .row
+      #inputContent.col-lg-5.col-md-5.col-sm-5
         textarea#inText(placeholder="Enter text here to be Synonymized")
-      .col-lg-6
-        p#outP(style="font-style:italic;") Here is your synonymized text:
+      #buttonContent.col-lg-2.col-md-2.col-md-2.col-sm-2
+        input#synonymizeButton(type="image", src="img/synonymize.png")
+      #synonymizedContent.col-lg-5.col-md-5.col-sm-5
+        p.visible-xs(style="font-style:italic;") Here is your Synonymized text:
         #outputText
           p#outText
   script(src='/js/synonymize.min.js')
