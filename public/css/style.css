@@ -135,18 +135,21 @@ h1, h2, h3, h4, h5, h6 {
 
 @media screen and (max-width:500px){
   #buttonContent{
-    padding-top: 10px;
+    padding-top: 5px;
+  }
+  #outputText{
+    height:150px;
   }
   .container {
     padding: 0px 5px 5px 5px;
   }
   #inputContent {
-    height: 160px;
+    height: 150px;
   }
   #inText {
-    height:110px;
+    height:150px;
     width:100%;
-    resize: none; 
+    resize: none;
   }
   #synonymizedContent {
     height: 150px;
@@ -160,7 +163,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0px;
   }
   #title {
-    font-size:15px;
+    font-size:25px;
   }
   header {
     padding:0px;
