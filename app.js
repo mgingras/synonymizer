@@ -5,6 +5,7 @@
 
 var express = require('express')
 , routes = require('./routes')
+, newrelic = require('newrelic')
 , compressor = require('node-minify')
 , path = require('path')
 , http = require('http')
