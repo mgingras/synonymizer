@@ -20,10 +20,10 @@ Written in node
 - [x] Modify the output field on the right with synonymized data   
 - [x] Better(ish) picking response words (now randomly choses amongst responses that match gramatical context)   
 - [x] Implement natural language recognition and replace words with valid synonym (verb, noun, adjective) (currently just replace with whichever has data(stupid))   
-- [ ] On client side when sending queries cast to lowercase   
+- [x] On client side when sending queries cast to lowercase   
 - [ ] When getting back upercase if after a punctuation point   
-- [ ] Get rid of unused css styles   
-- [ ] Add media conditions in order to optimize for mobile (looks bad on iphone and ipad atm, probably looks bad on other devices as well)   
+- [x] Get rid of unused css styles   
+- [x] Add media conditions in order to optimize for mobile (looks bad on iphone and ipad atm, probably looks bad on other devices as well)   
 
 
 
