@@ -124,17 +124,19 @@ h1, h2, h3, h4, h5, h6 {
     font-size:12px;
   }
 }
-@media screen and (max-width:768px){
-  #buttonContent{
-    padding-top: 10px;
-  }
-}
 
 /*
 *  Mobile
 */
-
-@media screen and (max-width:500px){
+@media screen and (min-width:450px){
+  .synText {
+    display:none;
+  }
+  #syn-text {
+    display:block;
+  }
+}
+@media screen and (max-width:450px){
   #buttonContent{
     padding-top: 5px;
   }
@@ -162,6 +164,14 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     border: none;
     padding: 0px;
+    margin-top:10px;
+    margin-bottom:10px;
+  }
+  .synText {
+    display:block;
+  }
+  #syn-text {
+    display:none;
   }
   #title {
     font-size:25px;
@@ -180,4 +190,11 @@ h1, h2, h3, h4, h5, h6 {
     font-size:11px;
     margin: 5px;
   }
+  #inputContent{
+    width:100%;
+  }
+  #synonymizedContent{
+    width:100%;
+  }
+  
 }

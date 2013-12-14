@@ -11,17 +11,17 @@ block content
         button.btn.btn-default View on GitHub
   .container
     .row
-      #syn.col-lg-5.col-md-5.col-sm-5
+      #syn.col-xs-5
         p(style="font-style:italic;") Enter text into this box for it to be Synonymized!!
-      #syn-text.col-lg-5.col-lg-offset-2.col-md-5.col-md-offset-2.col-sm-5.col-sm-offset-2.hidden-xs
+      #syn-text.col-xs-5.col-xs-offset-2(style="float:right;")
         p(style="font-style:italic;") Here is your Synonymized text:
     .row
-      #inputContent.col-lg-5.col-md-5.col-sm-5
+      #inputContent.col-xs-5
         textarea#inText(placeholder="Enter text here to be Synonymized")
-      #buttonContent.col-lg-2.col-md-2.col-md-2.col-sm-2
+      #buttonContent.col-xs-2
         input#synonymizeButton(type="image", src="img/synonymize.png")
-      #synonymizedContent.col-lg-5.col-md-5.col-sm-5
-        p.visible-xs(style="font-style:italic;") Here is your Synonymized text:
+      #synonymizedContent.col-xs-5
+        p.synText(style="font-style:italic;") Here is your Synonymized text:
         #outputText
           p#outText
   script(src='/js/synonymize.min.js')
