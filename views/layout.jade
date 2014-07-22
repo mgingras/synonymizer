@@ -1,18 +1,18 @@
 doctype 5
 html(lang="en")
   head
-    // Meta Tags 
+    // Meta Tags
     meta(charset="utf-8")
     meta(name="author", content="Martin Gingras")
     meta(name="description", content="Substitute random words in your text with their synonyms")
     meta(name="keywords", content="synonym,synonym-izer,synonymizer,substitute,words,switch words,fun,madlibs")
-    
+
     // Apple
     meta(name="apple-mobile-web-app-capable", content="yes" )
     meta(name="apple-mobile-web-app-status-bar-style", content="default")
     link(rel="apple-touch-icon", href="/img/appleSynonymize.png")
     link(rel="apple-touch-icon-precomposed", href="/img/appleSynonymize.png")
-    
+
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     // standard viewport tag to set the viewport to the device's width
     // , Android 2.3 devices need this so 100% width works properly and
@@ -21,22 +21,21 @@ html(lang="en")
     // width=device-width causes the iPhone 5 to letterbox the app, so
     // exclude it for iPhone 5 to allow full screen apps
     meta(name="viewport", id="vp6", content="initial-scale=1.0,user-scalable=no,maximum-scale=1",  media="(device-height: 568px)")
-    
+
     title=title
-    
+
     link(rel='stylesheet', href='/css/style.css')
     link(rel='stylesheet', href='/css/add2home.css')
-    link(rel='stylesheet', href='/css/bootstrap-theme.min.css')    
+    link(rel='stylesheet', href='/css/bootstrap-theme.min.css')
     link(rel='stylesheet', href='/css/bootstrap.min.css')
-    
+
     // For IE
     link(rel='shortcut icon', href='img/favicon.ico')
-    
-    // For Everything else... 
+    // For Everything else...
     link(rel='icon', type='image/ico', href='img/favicon.ico')
-    
+
     meta(property="og:image", content="/img/appleSynonymize.png")
-    
+
     script(src='/js/jquery-2.0.3.min.js')
     script(src='/js/bootstrap.min.js')
     script(src='/js/nlp-api-0.1.js')
